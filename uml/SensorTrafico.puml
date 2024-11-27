@@ -13,14 +13,15 @@ package Trafico{
     class SensorTraficoService{
         +avisarExceso()
     }
-    class SensorTraficoController{
-        +avisarExceso()
-    }
 }
 class GestionSensores{
     +crearSensor()
     +eliminarSensor()
     +agregarSensor()
+    +avisarExceso()
+    +mandarAvisoCalidad()
+    +mandarAvisoFuga()
+    +avisarPerdidas()
 }
 class SensorFabrica{
     +crearSensor()
@@ -38,8 +39,60 @@ class SensorRepository{
     +agregarSensor()
     +eliminarSensor()
 }
-note top of GestionSensores: Clase Service para todos los tipos de sensores
-SensorTrafico --> Sensor
-SensorTraficoService - GestionSensores
+class SensorController{
+    +mandarAvisoTrafico()
+    +mandarAvisoCalidad()
+    +mandarAvisoFuga()
+    +avisarPerdidas()
+}
+package Agua{
+    class SensorAgua{
+        -id: long
+        -detectarFuga: boolean
+        -calidad: Calidad
+        -estado: boolean
+        -tipo: String
+        +Sensor(id: long, estado: boolean, exceso: boolean, tipo: String, calidad: Calidad, detectarFuga: boolean)
+        +apagar()
+    }
+    class SensorAguaService{
+        +mandarAvisoFuga()
+        +mandarAvisoCalidad()
+    }
+}
+package Electricidad{
+    class SensorElectricidad{
+        -id: long
+        -perdidas: long
+        -estado: boolean
+        -tipo: String
+        +Sensor(id: long, estado: boolean, exceso: boolean, tipo: String, perdidas: long)
+        +apagar()
+    }
+    class SensorElectricidadService{
+        +avisarPerdidas()
+    }
+}
+
+
+
+SensorTrafico -> SensorTraficoService
+SensorAgua -> SensorAguaService
+SensorElectricidad -> SensorElectricidadService
+
+SensorTraficoService --> GestionSensores
+SensorAguaService --> GestionSensores
+SensorElectricidadService --> GestionSensores
+
+
+note right of Sensor
+    todas las clases de sensores extienden de esta
+end note
+GestionSensores --> SensorController
+GestionSensores --> SensorFabrica
+SensorFabrica --> Sensor
+GestionSensores - SensorRepository
+SensorRepository -> SensorController
+
 
 @enduml
