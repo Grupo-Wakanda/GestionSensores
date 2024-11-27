@@ -1,10 +1,45 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-package SensorTrafico{
-    package GestionTrafico{}
-
-
+package Trafico{
+    class SensorTrafico{
+        -id: long
+        -exceso: boolean
+        -estado: boolean
+        -tipo: String
+        +Sensor(id: long, estado: boolean, exceso: boolean, tipo: String)
+        +apagar()
+    }
+    class SensorTraficoService{
+        +avisarExceso()
+    }
+    class SensorTraficoController{
+        +avisarExceso()
+    }
 }
+class GestionSensores{
+    +crearSensor()
+    +eliminarSensor()
+    +agregarSensor()
+}
+class SensorFabrica{
+    +crearSensor()
+}
+abstract class Sensor{
+    -id: long
+    -estado: boolean
+    -tipo: String
+    +Sensor(id: long, estado: boolean, tipo: String)
+    +apagar()
+}
+class SensorRepository{
+    +findAll()
+    +findById()
+    +agregarSensor()
+    +eliminarSensor()
+}
+note top of GestionSensores: Clase Service para todos los tipos de sensores
+SensorTrafico --> Sensor
+SensorTraficoService - GestionSensores
 
 @enduml
