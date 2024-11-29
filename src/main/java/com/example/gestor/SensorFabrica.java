@@ -17,9 +17,9 @@ public class SensorFabrica {
        if (sensor.tipo.equalsIgnoreCase("trafico")) {
            return new SensorTrafico(ACTIVO, sensor.tipo, false);
        } else if (sensor.tipo.equalsIgnoreCase("agua")) {
-           return new SensorAgua(ACTIVO, sensor.tipo);
+
        } else if (sensor.tipo.equalsIgnoreCase("luz")) {
-           return new SensorLuz(ACTIVO, sensor.tipo);
+
        } else {
            return null;
        }
