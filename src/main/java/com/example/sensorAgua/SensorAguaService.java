@@ -2,13 +2,17 @@ package com.example.sensorAgua;
 
 public class SensorAguaService {
 
-    public void mandarAvisoFuga(){
+    private final SensorAgua sensorAgua;
 
-        System.out.println("Fuga detectada en el sensor Nº: " + );
+    public SensorAguaService(SensorAgua sensorAgua) {
+        this.sensorAgua = sensorAgua;
+    }
+
+    public void mandarAvisoFuga(){
+        System.out.println("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
     }
 
     public void mandarAvisoCalidad(){
-
-        System.out.println("Calidad del agua: " +);
+        System.out.println("Calidad del agua: " + sensorAgua.calidad);
     }
 }

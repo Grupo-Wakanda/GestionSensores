@@ -24,6 +24,7 @@ public class SensorTrafico extends Sensor {
     public void apagar() {
         if (this.estado == Estado.ACTIVO) {
             this.estado = Estado.INACTIVO;
+            System.out.println("Apagando sensor de tráfico");
         }
     }
 
@@ -31,6 +32,7 @@ public class SensorTrafico extends Sensor {
     public void encender() {
         if (this.estado == Estado.INACTIVO) {
             this.estado = Estado.ACTIVO;
+            System.out.println("Encendiendo sensor de tráfico");
         }
     }
 }
