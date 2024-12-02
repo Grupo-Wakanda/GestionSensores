@@ -39,6 +39,10 @@
             }
         }
 
+        public void detectarFuga() {
+            this.detectarFuga = true;
+        }
+
         public boolean isDetectarFuga() {
             return detectarFuga;
         }
@@ -52,6 +56,7 @@
         }
 
         public void setCalidad(Calidad calidad) {
-            this.calidad = Calidad.MEDIA;
+            this.calidad = Calidad.MEDIA; //empieza en media
+            //se debe cambiar en el repo de agua
         }
     }
