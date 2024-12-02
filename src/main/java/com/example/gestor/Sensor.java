@@ -1,5 +1,4 @@
 package com.example.gestor;
-
 import jakarta.persistence.*;
 
 
@@ -17,13 +16,12 @@ public abstract class Sensor {
         this.tipo = tipo;
     }
 
-    public Sensor() {}
+    public Sensor() {
+    }
 
     public abstract void apagar();
 
     public abstract void encender();
-
-
 
     public Estado getEstado() {
         return estado;

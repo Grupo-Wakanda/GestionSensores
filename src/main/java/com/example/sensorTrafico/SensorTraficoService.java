@@ -12,5 +12,4 @@ public class SensorTraficoService {
             //metodo redirigir trafico
         }
     }
-
 }
