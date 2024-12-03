@@ -39,6 +39,15 @@
             }
         }
 
+        @Override
+        public boolean estaEncendido() {
+            if (getEstado().equals(Estado.ACTIVO)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         public void detectarFuga() {
             this.detectarFuga = true;
         }

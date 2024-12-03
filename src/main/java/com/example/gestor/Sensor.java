@@ -23,6 +23,8 @@ public abstract class Sensor {
 
     public abstract void encender();
 
+    public abstract boolean estaEncendido();
+
     public Estado getEstado() {
         return estado;
     }
