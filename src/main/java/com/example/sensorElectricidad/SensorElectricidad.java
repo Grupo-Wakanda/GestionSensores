@@ -36,6 +36,15 @@ public class SensorElectricidad extends Sensor {
         }
     }
 
+    @Override
+    public boolean estaEncendido() {
+        if (getEstado().equals(Estado.ACTIVO)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public long getPerdidas() {
         return perdidas;
     }

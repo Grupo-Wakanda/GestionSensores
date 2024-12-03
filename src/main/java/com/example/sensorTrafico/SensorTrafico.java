@@ -35,4 +35,13 @@ public class SensorTrafico extends Sensor {
             System.out.println("Encendiendo sensor de tráfico");
         }
     }
+
+    @Override
+    public boolean estaEncendido() {
+        if (getEstado().equals(Estado.ACTIVO)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -14,16 +14,24 @@ public class SensorAguaService {
     public void mandarAvisoFuga(Long sensorId) {
         SensorAgua sensorAgua = sensorAguaRepository.findById(sensorId)
                 .orElseThrow(() -> new SensorNotFoundException(sensorId));
-        sensorAgua.detectarFuga();
-        System.out.println("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
-        sensorAguaRepository.save(sensorAgua);
-        //modificar metodo si se quiere poner otra logica
+        if (sensorAgua.estaEncendido()) {
+            sensorAgua.detectarFuga();
+            System.out.println("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
+            sensorAguaRepository.save(sensorAgua);
+            //modificar metodo si se quiere poner otra logica
+        }else {
+            System.out.println("El sensor Nº: " + sensorAgua.getId() + " esta apagado");
+        }
     }
 
     public void mandarAvisoCalidad(Long sensorId) {
         SensorAgua sensorAgua = sensorAguaRepository.findById(sensorId)
                 .orElseThrow(() -> new SensorNotFoundException(sensorId));
-        System.out.println("Calidad del agua de nivel " + sensorAgua.getCalidad() +
-                " detectada en el sensor Nº: " + sensorAgua.getId());
+        if (sensorAgua.estaEncendido()){
+            System.out.println("Calidad del agua de nivel " + sensorAgua.getCalidad() +
+                    " detectada en el sensor Nº: " + sensorAgua.getId());
+        }else {
+            System.out.println("El sensor Nº: " + sensorAgua.getId() + " esta apagado");
+        }
     }
 }
