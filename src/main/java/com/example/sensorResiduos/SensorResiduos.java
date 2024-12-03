@@ -45,6 +45,10 @@ public class SensorResiduos extends Sensor {
         }
     }
 
+    public String getTipo() {
+        return "residuos";
+    }
+
     public boolean isEsRecolectable() {
         return esRecolectable;
     }

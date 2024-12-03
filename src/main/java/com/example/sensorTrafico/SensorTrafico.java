@@ -44,4 +44,16 @@ public class SensorTrafico extends Sensor {
             return false;
         }
     }
+
+    public String getTipo() {
+        return "trafico";
+    }
+
+    public boolean isExceso() {
+        return exceso;
+    }
+
+    public void setExceso() {
+        this.exceso = true;
+    }
 }

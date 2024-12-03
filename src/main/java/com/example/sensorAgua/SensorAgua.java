@@ -48,6 +48,10 @@
             }
         }
 
+        public String getTipo() {
+            return "luz";
+        }
+
         public void detectarFuga() {
             this.detectarFuga = true;
         }

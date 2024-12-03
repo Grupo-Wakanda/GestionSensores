@@ -45,6 +45,10 @@ public class SensorElectricidad extends Sensor {
         }
     }
 
+    public String getTipo() {
+        return "electricidad";
+    }
+
     public long getPerdidas() {
         return perdidas;
     }
