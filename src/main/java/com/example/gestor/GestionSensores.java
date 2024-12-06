@@ -14,5 +14,4 @@ public class GestionSensores {
     //actualizar los valores si se resuelven los problemas
     public void actualizarValores(){}
 
-
 }
