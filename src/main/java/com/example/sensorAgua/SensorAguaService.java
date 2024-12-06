@@ -2,6 +2,7 @@ package com.example.sensorAgua;
 
 
 import com.example.exceptions.SensorNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,11 +10,8 @@ import java.util.List;
 @Service
 public class SensorAguaService {
 
-    private final SensorAguaRepository sensorAguaRepository;
-
-    public SensorAguaService(SensorAguaRepository sensorAguaRepository) {
-        this.sensorAguaRepository = sensorAguaRepository;
-    }
+    @Autowired
+    private SensorAguaRepository sensorAguaRepository;
 
     public void mandarAvisoFuga() {
         List<SensorAgua> sensores = sensorAguaRepository.findAll();
@@ -40,6 +38,7 @@ public class SensorAguaService {
             }
         }
     }
+
     //estos dos metodo realmente deberian estar en el servicio de agua
     public void reparacionFuga(SensorAgua sensorAgua) {
             System.out.println("Reparando fuga en el sensor Nº: " + sensorAgua.getId());

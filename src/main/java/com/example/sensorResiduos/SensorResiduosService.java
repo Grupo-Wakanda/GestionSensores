@@ -1,16 +1,14 @@
 package com.example.sensorResiduos;
 
 import com.example.exceptions.SensorNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SensorResiduosService {
 
-    private final SensorResiduosRepository sensorResiduosRepository;
-
-    public SensorResiduosService(SensorResiduosRepository sensorResiduosRepository) {
-        this.sensorResiduosRepository = sensorResiduosRepository;
-    }
+    @Autowired
+    private SensorResiduosRepository sensorResiduosRepository;
 
     public void avisarRecoleccion(Long sensorId) {
         SensorResiduos sensorResiduos = sensorResiduosRepository
