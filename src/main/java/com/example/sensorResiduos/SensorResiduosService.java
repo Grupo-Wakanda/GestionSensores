@@ -16,7 +16,7 @@ public class SensorResiduosService {
                 .findById(sensorId).orElseThrow(() -> new SensorNotFoundException(sensorId));
         if (sensorResiduos.estaEncendido()) {
         sensorResiduos.setEsRecolectable(); //es recolectable
-            System.out.println("Recoleccion detectada en el sensor Nº: " + sensorResiduos.getId());
+            System.out.println("Recoleccion necesaria detectada en el sensor Nº: " + sensorResiduos.getId());
         sensorResiduosRepository.save(sensorResiduos);
         }else {
             System.out.println("El sensor Nº: " + sensorResiduos.getId() + " esta apagado");

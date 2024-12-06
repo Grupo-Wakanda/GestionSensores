@@ -20,7 +20,7 @@ public class SensorTraficoService {
         SensorTrafico sensorTrafico = SensorTraficoRepository
                 .findById(sensorId).orElseThrow(() -> new SensorNotFoundException(sensorId));
         if (sensorTrafico.estaEncendido()) {
-        System.out.println("Hay conglomeracion de trafico. Redirigiendo trafico");
+        System.out.println("Hay conglomeracion de trafico. Redirigiendo trafico...");
             //metodo redirigir trafico del microservicio sensorTrafico
         SensorTraficoRepository.save(sensorTrafico);
         }else {

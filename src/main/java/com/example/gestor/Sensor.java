@@ -10,10 +10,12 @@ public abstract class Sensor {
     private Long id;
     public Estado estado;
     public String tipo;
+    public Reloj reloj;
 
     public Sensor(Estado estado, String tipo) {
         this.estado = estado;
         this.tipo = tipo;
+        this.reloj = new Reloj();
     }
 
     public Sensor() {
