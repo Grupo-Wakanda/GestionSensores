@@ -22,38 +22,16 @@
         public SensorAgua() {
             super();
         }
-
-        @Override
-        public void apagar() {
-            if (this.estado == Estado.ACTIVO) {
-                this.estado = Estado.INACTIVO;
-                System.out.println("Apagando sensor de agua");
-            }
-        }
-
-        @Override
-        public void encender() {
-            if (this.estado == Estado.INACTIVO) {
-                this.estado = Estado.ACTIVO;
-                System.out.println("Encendiendo sensor de agua");
-            }
-        }
-
-        @Override
-        public boolean estaEncendido() {
-            if (getEstado().equals(Estado.ACTIVO)){
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         public String getTipo() {
             return "luz";
         }
 
         public void detectarFuga() {
             this.detectarFuga = true;
+        }
+
+        public void repararFuga() {
+            this.detectarFuga = false;
         }
 
         public boolean isDetectarFuga() {

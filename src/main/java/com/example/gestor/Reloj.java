@@ -1,8 +1,6 @@
 package com.example.gestor;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Transient;
 
 @Embeddable
 public class Reloj {
@@ -19,9 +17,9 @@ public class Reloj {
         while (ejecutando && tiempo < 1000) { //16 minutos
             tiempo++;
         }try {
-            Thread.sleep(1000000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
-           Thread.currentThread().interrupt();
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -33,6 +31,16 @@ public class Reloj {
 
     public void detenerTiempo(){
         this.ejecutando = false;
+    }
+
+    public void realizandoTarea() {
+        System.out.println("Pausando el reloj por 1 segundo..");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        System.out.println("Reloj reanudado.");
     }
 
     public long getTiempo() {

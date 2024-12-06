@@ -1,8 +1,9 @@
 package com.example.sensorResiduos;
 
 import com.example.exceptions.SensorNotFoundException;
-import com.example.gestor.Estado;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SensorResiduosService {
 
     private final SensorResiduosRepository sensorResiduosRepository;
