@@ -30,4 +30,8 @@ public class SensorTrafico extends Sensor {
     public void setExceso() {
         this.exceso = true;
     }
+
+    public boolean noHayExceso() {
+        return exceso = false;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.sensorResiduos;
 
 import com.example.exceptions.SensorNotFoundException;
+import com.example.gestor.Sensor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +21,11 @@ public class SensorResiduosService {
         }else {
             System.out.println("El sensor Nº: " + sensorResiduos.getId() + " esta apagado");
         }
+    }
+
+    public void simularRecoleccion(SensorResiduos sensorResiduos){
+        System.out.print("Recolectando residuos..." + "\n" //hacer que espere
+                + "Residuos recolectados correctamente");
+
     }
 }

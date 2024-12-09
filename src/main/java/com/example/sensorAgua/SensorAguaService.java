@@ -20,7 +20,7 @@ public class SensorAguaService {
                 System.out.println("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
                 sensorAgua.fuga();//se le debe asociar la fuga al id del sensor
                 sensorAguaRepository.save(sensorAgua); // en la linea siguiente iria un thread.sleep para simular la reparacion
-                reparacionFuga(sensorAgua);
+                simularReparacion(sensorAgua);
             } else {
                 System.out.println("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
             }
@@ -31,7 +31,7 @@ public class SensorAguaService {
         List<SensorAgua> sensores = sensorAguaRepository.findAll();
         for (SensorAgua sensorAgua : sensores) {
             if (sensorAgua.estaEncendido()) {
-                System.out.println( calidad() +"detectada en el sensor Nº: " + sensorAgua.getId());
+                System.out.println(simularCalidad() +"detectada en el sensor Nº: " + sensorAgua.getId());
                 sensorAguaRepository.save(sensorAgua); // Guarda los cambios
             } else {
                 System.out.println("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
@@ -40,13 +40,13 @@ public class SensorAguaService {
     }
 
     //estos dos metodo realmente deberian estar en el servicio de agua
-    public void reparacionFuga(SensorAgua sensorAgua) {
+    public void simularReparacion(SensorAgua sensorAgua) {
             System.out.println("Reparando fuga en el sensor Nº: " + sensorAgua.getId());
             //sensorAgua.repararFuga();
             sensorAguaRepository.save(sensorAgua);
     }
 
-    public String calidad() {
+    public String simularCalidad() {
         //metodo para randomizar el tipo de calidad del agua
         Calidad calidad = Calidad.values()[(int) (Math.random() * Calidad.values().length)];
         return "Calidad del agua: " + calidad;
