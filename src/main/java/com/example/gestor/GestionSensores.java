@@ -13,5 +13,7 @@ public class GestionSensores {
     public void numeroSensores(){}
     //actualizar los valores si se resuelven los problemas
     public void actualizarValores(){}
+    public void mandarAviso(){} //tiene que mandar los diferentes tipos de avisos, segun el tipo de sensor
+
 
 }

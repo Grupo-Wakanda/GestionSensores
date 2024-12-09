@@ -16,9 +16,9 @@ public class SensorAguaService {
     public void mandarAvisoFuga() {
         List<SensorAgua> sensores = sensorAguaRepository.findAll();
         for (SensorAgua sensorAgua : sensores) {
-            if (sensorAgua.estaEncendido()) {
+            if (sensorAgua.estaEncendido() && sensorAgua.noTieneFuga()) {
                 System.out.println("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
-                sensorAgua.detectarFuga();//se le debe asociar la fuga al id del sensor
+                sensorAgua.fuga();//se le debe asociar la fuga al id del sensor
                 sensorAguaRepository.save(sensorAgua); // en la linea siguiente iria un thread.sleep para simular la reparacion
                 reparacionFuga(sensorAgua);
             } else {
@@ -42,7 +42,7 @@ public class SensorAguaService {
     //estos dos metodo realmente deberian estar en el servicio de agua
     public void reparacionFuga(SensorAgua sensorAgua) {
             System.out.println("Reparando fuga en el sensor Nº: " + sensorAgua.getId());
-            sensorAgua.repararFuga();
+            //sensorAgua.repararFuga();
             sensorAguaRepository.save(sensorAgua);
     }
 

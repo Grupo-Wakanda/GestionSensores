@@ -23,15 +23,15 @@
             super();
         }
         public String getTipo() {
-            return "luz";
+            return "agua";
         }
 
-        public void detectarFuga() {
+        public void fuga() {
             this.detectarFuga = true;
         }
 
-        public void repararFuga() {
-            this.detectarFuga = false;
+        public boolean noTieneFuga() {
+            return detectarFuga = false;
         }
 
         public boolean isDetectarFuga() {
