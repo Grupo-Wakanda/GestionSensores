@@ -2,6 +2,7 @@ package com.example.sensorTrafico;
 
 import com.example.exceptions.SensorNotFoundException;
 import com.example.gestor.Estado;
+import com.example.gestor.Sensor;
 import com.example.sensorElectricidad.SensorElectricidad;
 import com.example.sensorResiduos.SensorResiduos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,20 @@ public class SensorTraficoService {
         List<SensorTrafico> sensorTrafico = SensorTraficoRepository.findAll();
         for (SensorTrafico sensor : sensorTrafico) {
                 if (sensor.estaEncendido()) {
-                    System.out.println("Hay conglomeracion de trafico. Redirigiendo trafico...");
+                    System.out.println("Hay conglomeracion de trafico en el sensor "+ sensor.getId());
                     SensorTraficoRepository.save(sensor);
-                    //metodo de redirigir trafico
+                    simularTrafico(sensor);
                 } else {
                     System.out.println("El sensor Nº: " + sensor.getId() + " esta apagado");
             }
         }
+    }
+
+    public void simularTrafico(SensorTrafico sensorTrafico) {
+        System.out.print("Redirigiendo trafico en el sensor " + "\n"
+                + "Desviando trafico por rutas alternativas..." + "\n"
+                + "Trafico redirigido correctamente");
+        sensorTrafico.noHayExceso();
+        SensorTraficoRepository.save(sensorTrafico);
     }
 }
