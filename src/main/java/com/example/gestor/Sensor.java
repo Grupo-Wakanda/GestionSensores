@@ -4,26 +4,43 @@ import jakarta.persistence.*;
 
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
-public abstract class Sensor {
+public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     public Estado estado;
     public String tipo;
+    public Reloj reloj;
 
     public Sensor(Estado estado, String tipo) {
         this.estado = estado;
         this.tipo = tipo;
+        this.reloj = new Reloj();
     }
 
     public Sensor() {
     }
 
-    public abstract void apagar();
+    public void apagar(){
+        if (this.estado == Estado.ACTIVO) {
+            this.estado = Estado.INACTIVO;
+            reloj.detenerTiempo();
+            System.out.println("Apagando sensor de" + getTipo());
+        }
+    }
 
-    public abstract void encender();
+    public void encender(){
+        if (this.estado == Estado.INACTIVO) {
+            this.estado = Estado.ACTIVO;
+            new Thread(reloj::iniciarTiempo).start(); //    reloj en un hilo
+            System.out.println("Encendiendo sensor de" + getTipo());
 
-    public abstract boolean estaEncendido();
+        }
+    }
+
+    public boolean estaEncendido(){
+      return this.estado == Estado.ACTIVO;
+    }
 
     public Estado getEstado() {
         return estado;

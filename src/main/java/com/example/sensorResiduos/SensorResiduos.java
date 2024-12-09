@@ -20,30 +20,6 @@ public class SensorResiduos extends Sensor {
         super();
     }
 
-    @Override
-    public void apagar() {
-        if (this.estado == Estado.ACTIVO) {
-            this.estado = Estado.INACTIVO;
-            System.out.println("Apagando sensor de residuos");
-        }
-    }
-
-    @Override
-    public void encender() {
-        if (this.estado == Estado.INACTIVO) {
-            this.estado = Estado.ACTIVO;
-            System.out.println("Encendiendo sensor de residuos");
-        }
-    }
-
-    @Override
-    public boolean estaEncendido() {
-        if (getEstado().equals(Estado.ACTIVO)){
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public String getTipo() {
         return "residuos";
