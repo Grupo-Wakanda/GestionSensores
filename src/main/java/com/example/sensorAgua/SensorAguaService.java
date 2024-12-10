@@ -1,11 +1,10 @@
 package com.example.sensorAgua;
 
-
-import com.example.exceptions.SensorNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class SensorAguaService {
@@ -16,7 +15,7 @@ public class SensorAguaService {
     public void mandarAvisoFuga() {
         List<SensorAgua> sensores = sensorAguaRepository.findAll();
         for (SensorAgua sensorAgua : sensores) {
-            if (sensorAgua.estaEncendido() && sensorAgua.noTieneFuga()) {
+            if (sensorAgua.estaEncendido() ) { //poner como la otra condicion metodos de random
                 System.out.println("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
                 sensorAgua.fuga();//se le debe asociar la fuga al id del sensor
                 sensorAguaRepository.save(sensorAgua); // en la linea siguiente iria un thread.sleep para simular la reparacion
@@ -31,7 +30,7 @@ public class SensorAguaService {
         List<SensorAgua> sensores = sensorAguaRepository.findAll();
         for (SensorAgua sensorAgua : sensores) {
             if (sensorAgua.estaEncendido()) {
-                System.out.println(simularCalidad() +"detectada en el sensor Nº: " + sensorAgua.getId());
+                System.out.println(simularCalidad() +" detectada en el sensor Nº: " + sensorAgua.getId());
                 sensorAguaRepository.save(sensorAgua); // Guarda los cambios
             } else {
                 System.out.println("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");

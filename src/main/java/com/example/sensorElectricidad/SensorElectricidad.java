@@ -19,10 +19,6 @@ public class SensorElectricidad extends Sensor {
     public SensorElectricidad() {
         super();
     }
-
-
-    
-
     public String getTipo() {
         return "electricidad";
     }

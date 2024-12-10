@@ -32,4 +32,8 @@ public class SensorResiduos extends Sensor {
     public void setEsRecolectable() {
         this.esRecolectable = true;
     }
+
+    public boolean recolectado(){
+        return !esRecolectable;
+    }
 }

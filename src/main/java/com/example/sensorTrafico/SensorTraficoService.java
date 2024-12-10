@@ -1,14 +1,7 @@
 package com.example.sensorTrafico;
 
-import com.example.exceptions.SensorNotFoundException;
-import com.example.gestor.Estado;
-import com.example.gestor.Sensor;
-import com.example.sensorElectricidad.SensorElectricidad;
-import com.example.sensorResiduos.SensorResiduos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.sensorTrafico.SensorTraficoRepository;
-
 import java.util.List;
 
 @Service
