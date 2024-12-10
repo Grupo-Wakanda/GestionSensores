@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 @Service
 public class SensorAguaService {
 
+    Logger logger = Logger.getLogger(SensorAguaService.class.getName());
+
     @Autowired
     private SensorAguaRepository sensorAguaRepository;
 
@@ -16,12 +18,12 @@ public class SensorAguaService {
         List<SensorAgua> sensores = sensorAguaRepository.findAll();
         for (SensorAgua sensorAgua : sensores) {
             if (sensorAgua.estaEncendido() ) { //poner como la otra condicion metodos de random
-                System.out.println("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
+                logger.info("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
                 sensorAgua.fuga();//se le debe asociar la fuga al id del sensor
                 sensorAguaRepository.save(sensorAgua); // en la linea siguiente iria un thread.sleep para simular la reparacion
                 simularReparacion(sensorAgua);
             } else {
-                System.out.println("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
+                logger.warning("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
             }
         }
     }
@@ -30,18 +32,18 @@ public class SensorAguaService {
         List<SensorAgua> sensores = sensorAguaRepository.findAll();
         for (SensorAgua sensorAgua : sensores) {
             if (sensorAgua.estaEncendido()) {
-                System.out.println(simularCalidad() +" detectada en el sensor Nº: " + sensorAgua.getId());
+                logger.info(simularCalidad() +" detectada en el sensor Nº: " + sensorAgua.getId());
                 sensorAguaRepository.save(sensorAgua); // Guarda los cambios
             } else {
-                System.out.println("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
+                logger.warning("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
             }
         }
     }
 
     //estos dos metodo realmente deberian estar en el servicio de agua
     public void simularReparacion(SensorAgua sensorAgua) {
-            System.out.println("Reparando fuga en el sensor Nº: " + sensorAgua.getId());
-            //sensorAgua.repararFuga();
+            logger.info("Reparando fuga en el sensor Nº: " + sensorAgua.getId());
+            sensorAgua.noTieneFuga();
             sensorAguaRepository.save(sensorAgua);
     }
 
