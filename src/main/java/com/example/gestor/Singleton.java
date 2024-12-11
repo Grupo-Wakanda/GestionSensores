@@ -6,8 +6,4 @@ public class Singleton {
     //crear el constructor privado
     //metodo para controlar el acceso a la instancia
 
-
-
-
-
 }

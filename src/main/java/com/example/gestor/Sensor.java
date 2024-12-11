@@ -38,6 +38,14 @@ public class Sensor {
         }
     }
 
+    public Reloj getReloj() {
+        return reloj;
+    }
+
+    public void setReloj(Reloj reloj) {
+        this.reloj = reloj;
+    }
+
     public boolean estaEncendido(){
       return this.estado == Estado.ACTIVO;
     }

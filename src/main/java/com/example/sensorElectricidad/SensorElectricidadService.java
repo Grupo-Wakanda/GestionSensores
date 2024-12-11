@@ -1,5 +1,6 @@
 package com.example.sensorElectricidad;
 
+import com.example.gestor.RandomizacionEventos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,17 @@ public class SensorElectricidadService {
     @Autowired
     private SensorElectricidadRepository sensorElectricidadRepository;
 
-    public void avisarPerdidas() {
+    @Autowired
+    private RandomizacionEventos randomizacionEventos;
+
+
+    public void perdidas() {
         List<SensorElectricidad> sensorElectricidad = sensorElectricidadRepository.findAll();
         for (SensorElectricidad sensor : sensorElectricidad) {
             if (sensor.estaEncendido()) {
                 sensor.setPerdidas(simularPerdidas());
                logger.info("Perdidas detectadas con una estimacion de: " + sensor.getPerdidas()
-                        + " en el sensor Nº: " + sensor.getId());
+                        +"Kw/h"+ " en el sensor Nº: " + sensor.getId());
                 sensorElectricidadRepository.save(sensor); //esto guarda las perdidas, hay que crear
                 // una tabla relacional para el valor total por id de sensor
             } else {
@@ -30,8 +35,14 @@ public class SensorElectricidadService {
     }
 
     public long simularPerdidas(){
-        //randomizar el valor de las perdidas /kWh
         int valorRnd = (int) (Math.random() * 1000);
         return valorRnd; //perdidas
     }
+    //el valor tiene que ser leido en sus repositorios para que puedan utilizarlo
+
+    public void avisoElectricidad(){
+        randomizacionEventos.manejarCiclo("luz", ); //ver como poner el SensorElectricidad para incluirlo como parametro
+
+    }
+
 }

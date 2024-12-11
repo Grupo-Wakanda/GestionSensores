@@ -22,6 +22,7 @@ public class SensorTrafico extends Sensor {
     public SensorTrafico() {
         super();
     }
+
     public String getTipo() {
         return "trafico";
     }
