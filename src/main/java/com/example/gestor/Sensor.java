@@ -7,10 +7,10 @@ import jakarta.persistence.*;
 public class Sensor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    public Estado estado;
-    public String tipo;
-    public Reloj reloj;
+    protected Long id;
+    protected Estado estado;
+    protected String tipo;
+    protected Reloj reloj;
 
     public Sensor(Estado estado, String tipo) {
         this.estado = estado;

@@ -1,10 +1,7 @@
 package com.example.gestor;
-
-import com.example.sensorAgua.SensorAgua;
 import com.example.sensorAgua.SensorAguaService;
 import com.example.sensorTrafico.SensorTraficoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -12,9 +9,7 @@ import java.util.Random;
 @Service
 public class RandomizacionEventos {
 
-    private final Reloj reloj = new Reloj();
     private final int ciclo = 30;
-    private final long tiempo = reloj.getTiempo();
 
     @Autowired
     SensorAguaService sensorAguaService;
@@ -22,59 +17,30 @@ public class RandomizacionEventos {
     @Autowired
     SensorTraficoService sensorTraficoService;
 
+    public void manejarCiclo(Reloj reloj, Runnable accion) {
+        long tiempo = reloj.getTiempo();
 
-    public void cicloSensorTrafico() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
+        if (tiempo % ciclo == 0) {
             if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-                sensorTraficoService.avisarExceso();
+                reloj.realizandoTarea(); //pausar el ciclo
+                accion.run();
             }
         }
     }
 
-    public void cicloSensorFuga() {
-        if (tiempo == this.ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-                sensorAguaService.mandarAvisoFuga();
-            }
-        }
+    public void cicloSensorTrafico(Reloj reloj) {
+        manejarCiclo(reloj, () -> sensorTraficoService.avisarExceso());
     }
 
-    public void cicloCalidad() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-                sensorAguaService.mandarAvisoCalidad();
-            }
-        }
+    public void cicloSensorFuga(Reloj reloj) {
+        manejarCiclo(reloj, () -> sensorAguaService.mandarAvisoFuga());
     }
 
-    public void cicloSensorPerdida() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-
-            }
-        }
+    public void cicloCalidad(Reloj reloj) {
+        manejarCiclo(reloj, () -> sensorAguaService.mandarAvisoCalidad());
     }
 
-    public void cicloRecoleccion() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-
-            }
-        }
-    }
-
-    public int probabilidadEvento(){
-        int valorDado = (int)Math.floor(Math.random()*10);
-        return valorDado;
+    public int probabilidadEvento() {
+        return new Random().nextInt(10);
     }
 }

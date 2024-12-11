@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres
+    container_name: sensores-postgres
+    environment:
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: contraseña
+      POSTGRES_DB: sensores_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - sensores_net
+
+  sensores_app:
+    image: sensores:1
+    container_name: sensores_app
+    ports:
+      - "8080:8080"
+    networks:
+      - sensores_net
+
+volumes:
+  pgdata:
+
+networks:
+  sensores_net:
+    driver: bridge

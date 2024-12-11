@@ -1,6 +1,7 @@
 package com.example.sensorResiduos;
 
 import com.example.gestor.Estado;
+import com.example.gestor.Reloj;
 import com.example.gestor.Sensor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,10 +9,12 @@ import jakarta.persistence.Entity;
 @Entity
 public class SensorResiduos extends Sensor {
 
-    @Column(name = "esRecolectable")
-    public boolean esRecolectable;
+    private Reloj reloj;
 
-    public SensorResiduos(Estado estado, String tipo, boolean esRecolectable) {
+    @Column(name = "esRecolectable")
+    protected boolean esRecolectable;
+
+    public SensorResiduos(Estado estado, String tipo, Reloj reloj, boolean esRecolectable) {
         super(estado, tipo);
         this.esRecolectable = esRecolectable;
     }
@@ -35,5 +38,13 @@ public class SensorResiduos extends Sensor {
 
     public boolean recolectado(){
         return !esRecolectable;
+    }
+
+    public Reloj getReloj() {
+        return reloj;
+    }
+
+    public void setReloj(Reloj reloj) {
+        this.reloj = reloj;
     }
 }

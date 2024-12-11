@@ -17,11 +17,11 @@ public class SensorTraficoService {
         List<SensorTrafico> sensorTrafico = SensorTraficoRepository.findAll();
         for (SensorTrafico sensor : sensorTrafico) {
             if (sensor.estaEncendido()) {
-                    logger.info("Hay conglomeracion de trafico en el sensor "+ sensor.getId());
-                    SensorTraficoRepository.save(sensor);
-                    simularTrafico(sensor);
+                logger.info("Hay conglomeracion de trafico en el sensor "+ sensor.getId());
+                SensorTraficoRepository.save(sensor);
+                simularTrafico(sensor);
             } else {
-                    logger.warning("El sensor Nº: " + sensor.getId() + " esta apagado");
+                logger.warning("El sensor Nº: " + sensor.getId() + " esta apagado");
             }
         }
     }
