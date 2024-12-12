@@ -27,6 +27,7 @@ public class RandomizacionEventos {
             ciclosCompletadosPorTipo.get(tipoSensor).add((int) tiempo);
             if (probabilidadEvento() > 7) {
                 reloj.realizandoTarea(); //pausar el ciclo, porque cuando se calcula la probabilidad, se tiene que parar el tiempo
+                ciclosCompletados.add(ciclo);
                 accion.run(); //ejecutar el aviso
             }
         }
