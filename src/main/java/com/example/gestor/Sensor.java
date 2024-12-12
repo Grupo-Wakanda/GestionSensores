@@ -10,6 +10,8 @@ public class Sensor {
     protected Long id;
     protected Estado estado;
     protected String tipo;
+
+    @Embedded
     protected Reloj reloj;
 
     public Sensor(Estado estado, String tipo) {

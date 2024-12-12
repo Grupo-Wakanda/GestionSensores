@@ -14,16 +14,14 @@ import static com.example.gestor.Estado.ACTIVO;
 public class SensorFabrica {
 
     public Sensor crearSensor(Sensor sensor) { //corregir logica
-        Reloj reloj = new Reloj();
-
        if (sensor.tipo.equalsIgnoreCase("trafico")) {
-           return new SensorTrafico(ACTIVO, sensor.tipo, reloj,  false);
+           return new SensorTrafico(ACTIVO, sensor.tipo, false);
        } else if (sensor.tipo.equalsIgnoreCase("agua")) {
-            return new SensorAgua(ACTIVO, sensor.tipo, Calidad.MEDIA,reloj, false);
+            return new SensorAgua(ACTIVO, sensor.tipo, Calidad.MEDIA, false);
        } else if (sensor.tipo.equalsIgnoreCase("luz")) {
-           return new SensorElectricidad(ACTIVO, sensor.tipo, reloj, 0);
+           return new SensorElectricidad(ACTIVO, sensor.tipo, 0);
        } else if (sensor.tipo.equalsIgnoreCase("residuos")) {
-              return new SensorResiduos(ACTIVO, sensor.tipo, reloj, false);
+              return new SensorResiduos(ACTIVO, sensor.tipo, false);
        }
          return null;
     }

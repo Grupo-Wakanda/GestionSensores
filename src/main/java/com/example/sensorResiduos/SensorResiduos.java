@@ -9,12 +9,10 @@ import jakarta.persistence.Entity;
 @Entity
 public class SensorResiduos extends Sensor {
 
-    private Reloj reloj;
-
     @Column(name = "esRecolectable")
     protected boolean esRecolectable;
 
-    public SensorResiduos(Estado estado, String tipo, Reloj reloj, boolean esRecolectable) {
+    public SensorResiduos(Estado estado, String tipo, boolean esRecolectable) {
         super(estado, tipo);
         this.esRecolectable = esRecolectable;
     }
@@ -38,13 +36,5 @@ public class SensorResiduos extends Sensor {
 
     public boolean recolectado(){
         return !esRecolectable;
-    }
-
-    public Reloj getReloj() {
-        return reloj;
-    }
-
-    public void setReloj(Reloj reloj) {
-        this.reloj = reloj;
     }
 }

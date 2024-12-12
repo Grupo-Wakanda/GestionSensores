@@ -8,15 +8,13 @@
     @Entity
     public class SensorAgua extends Sensor {
 
-        private Reloj reloj;
-
         @Column(name = "detectarFuga")
         protected boolean detectarFuga;
 
         @Column(name = "calidad")
         protected Calidad calidad;
 
-        public SensorAgua(Estado estado, String tipo , Calidad calidad, Reloj reloj, boolean detectarFuga) {
+        public SensorAgua(Estado estado, String tipo , Calidad calidad, boolean detectarFuga) {
             super(estado, tipo);
             this.detectarFuga = detectarFuga;
             this.calidad = calidad;
@@ -47,14 +45,6 @@
 
         public Calidad getCalidad() {
             return calidad;
-        }
-
-        public Reloj getReloj() {
-            return reloj;
-        }
-
-        public void setReloj(Reloj reloj) {
-            this.reloj = reloj;
         }
 
         public void setCalidad(Calidad calidad) {
