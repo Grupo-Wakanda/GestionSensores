@@ -1,80 +1,42 @@
 package com.example.gestor;
-
-import com.example.sensorAgua.SensorAgua;
 import com.example.sensorAgua.SensorAguaService;
+import com.example.sensorElectricidad.SensorElectricidad;
+import com.example.sensorElectricidad.SensorElectricidadService;
+import com.example.sensorResiduos.SensorResiduos;
+import com.example.sensorResiduos.SensorResiduosService;
 import com.example.sensorTrafico.SensorTraficoService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class RandomizacionEventos {
 
-    private final Reloj reloj = new Reloj();
     private final int ciclo = 30;
-    private final long tiempo = reloj.getTiempo();
 
-    @Autowired
-    SensorAguaService sensorAguaService;
+    private List<Integer> ciclosCompletados = new ArrayList<>();
 
-    @Autowired
-    SensorTraficoService sensorTraficoService;
+    private final Map<String, List<Integer>> ciclosCompletadosPorTipo = new HashMap<>();
 
-
-    public void cicloSensorTrafico() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
+    public void manejarCiclo(String tipoSensor, Reloj reloj, Runnable accion) {
+        long tiempo = reloj.getTiempo();
+        ciclosCompletadosPorTipo.putIfAbsent(tipoSensor, new ArrayList<>()); //crea una nueva lista si no existe
+        if (tiempo % ciclo == 0) {
+            ciclosCompletadosPorTipo.get(tipoSensor).add((int) tiempo);
             if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-                sensorTraficoService.avisarExceso();
+                reloj.realizandoTarea(); //pausar el ciclo, porque cuando se calcula la probabilidad, se tiene que parar el tiempo
+                accion.run(); //ejecutar el aviso
             }
         }
     }
 
-    public void cicloSensorFuga() {
-        if (tiempo == this.ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-                sensorAguaService.mandarAvisoFuga();
-            }
-        }
+    public List<Integer> obtenerCiclosCompletados(String tipoSensor) {
+        return ciclosCompletadosPorTipo.getOrDefault(tipoSensor, new ArrayList<>());
     }
 
-    public void cicloCalidad() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-                sensorAguaService.mandarAvisoCalidad();
-            }
-        }
-    }
-
-    public void cicloSensorPerdida() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-
-            }
-        }
-    }
-
-    public void cicloRecoleccion() {
-        if (tiempo == ciclo) {
-            probabilidadEvento();
-            if (probabilidadEvento() > 7) {
-                reloj.realizandoTarea();
-
-            }
-        }
-    }
-
-    public int probabilidadEvento(){
-        int valorDado = (int)Math.floor(Math.random()*10);
-        return valorDado;
+    public int probabilidadEvento() {
+        return new Random().nextInt(10);
     }
 }

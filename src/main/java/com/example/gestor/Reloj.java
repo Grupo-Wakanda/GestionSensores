@@ -43,6 +43,14 @@ public class Reloj {
         System.out.println("Reloj reanudado.");
     }
 
+    public boolean isEjecutando() {
+        return ejecutando;
+    }
+
+    public void setEjecutando(boolean ejecutando) {
+        this.ejecutando = ejecutando;
+    }
+
     public long getTiempo() {
         return this.tiempo;
     }
