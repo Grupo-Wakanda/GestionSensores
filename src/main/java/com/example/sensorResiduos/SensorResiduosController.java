@@ -11,8 +11,5 @@ public class SensorResiduosController {
     @Autowired
     private SensorResiduosService sensorResiduosService;
 
-    @RequestMapping("/mandarAvisoRecoleccion")
-    public void mandarAvisoRecoleccion(){
-        sensorResiduosService.avisarRecoleccion();
-    }
+
 }

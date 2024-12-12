@@ -11,9 +11,6 @@ public class SensorTraficoController {
     @Autowired
     private SensorTraficoService sensorTraficoService;
 
-    @RequestMapping("/mandarAvisoExceso")
-    public void mandarAvisoExceso(){
-        sensorTraficoService.avisarExceso();
-    }
+
 
 }
