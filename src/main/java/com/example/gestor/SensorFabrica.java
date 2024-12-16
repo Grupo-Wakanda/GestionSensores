@@ -2,27 +2,37 @@ package com.example.gestor;
 
 import com.example.sensorAgua.Calidad;
 import com.example.sensorAgua.SensorAgua;
+import com.example.sensorAgua.SensorAguaRepository;
 import com.example.sensorElectricidad.SensorElectricidad;
 import com.example.sensorResiduos.SensorResiduos;
 import com.example.sensorTrafico.SensorTrafico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.logging.Logger;
+
 import static com.example.gestor.Estado.ACTIVO;
 
 @Component
 public class SensorFabrica {
 
-    public Sensor crearSensor(Sensor sensor) { //corregir logica
-       if (sensor.tipo.equalsIgnoreCase("trafico")) {
-           return new SensorTrafico(ACTIVO, sensor.tipo, false);
-       } else if (sensor.tipo.equalsIgnoreCase("agua")) {
-            return new SensorAgua(ACTIVO, sensor.tipo, Calidad.MEDIA, false);
-       } else if (sensor.tipo.equalsIgnoreCase("luz")) {
-           return new SensorElectricidad(ACTIVO, sensor.tipo, 0);
-       } else if (sensor.tipo.equalsIgnoreCase("residuos")) {
-              return new SensorResiduos(ACTIVO, sensor.tipo, false);
-       }
-         return null;
+    Logger logger = Logger.getLogger(SensorFabrica.class.getName());
+
+    @Autowired
+    private SensorAguaRepository sensorAguaRepository;
+
+    public Sensor crearSensorAgua() {
+        return new SensorAgua(ACTIVO, "agua", Calidad.MEDIA, false, false);
+    }
+    public Sensor crearSensorTrafico() {
+        return new SensorTrafico(ACTIVO, "trafico", false);
+    }
+    public Sensor crearSensorElectricidad() {
+        return new SensorElectricidad(ACTIVO, "luz", 0);
+    }
+    public Sensor crearSensorResiduos() {
+        return new SensorResiduos(ACTIVO, "residuos", false);
     }
 }
+

@@ -1,5 +1,8 @@
 package com.example.sensorAgua;
 
+import com.example.gestor.GestionSensores;
+import com.example.gestor.Sensor;
+import com.example.gestor.SensorFabrica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,36 +17,57 @@ public class SensorAguaService {
     @Autowired
     private SensorAguaRepository sensorAguaRepository;
 
-    public void mandarAvisoFuga() {
-        List<SensorAgua> sensores = sensorAguaRepository.findAll();
-        for (SensorAgua sensorAgua : sensores) {
-            if (sensorAgua.estaEncendido() ) { //poner como la otra condicion metodos de random
-                logger.info("Fuga detectada en el sensor Nº: " + sensorAgua.getId());
-                sensorAgua.fuga();//se le debe asociar la fuga al id del sensor
-                sensorAguaRepository.save(sensorAgua); // en la linea siguiente iria un thread.sleep para simular la reparacion
+    public void mandarAviso(String tipoAviso) {
+        List<SensorAgua> sensorAgua = sensorAguaRepository.findAll(); //se obtienen los sensores
+
+        if (sensorAgua.isEmpty()){
+            logger.warning("No hay sensores de agua");
+            return;
+        }
+
+        for (SensorAgua sensor : sensorAgua) {
+            try{
+
+                if (!sensor.estaEncendido() || sensorAgua == null) {
+                    logger.warning("El sensor con ID: " +  (sensorAgua != null ? sensor.getId(): "desconocido") +
+                            "Esta apagado o no es valido" );
+                    continue;
+                }
+
+                procesamientoSensorAgua(sensor, tipoAviso);
+                sensorAguaRepository.save(sensor);
+
+            } catch (Exception e){ //cambiar la excepcion a una propia
+
+                logger.severe("Error al obtener los datos del sensor con ID: "
+                        + (sensorAgua != null ? sensor.getId(): "desconocido") + " " + e.getMessage());
+
+            }
+        }
+    }
+
+    private void procesamientoSensorAgua(SensorAgua sensorAgua, String tipoaviso) {
+        switch (tipoaviso.toLowerCase()){
+            case "fuga":
+                sensorAgua.setDetectarFuga(true);
+                logger.info("Fuga detectada en el sensor Nº: " + sensorAgua.getId() + " se procede a reparar la fuga");
                 simularReparacion(sensorAgua);
-            } else {
-                logger.warning("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
-            }
+                break;
+            case "calidad":
+                logger.info("Calidad del agua en el sensor Nº: " + sensorAgua.getId() + " es: " + simularCalidad());
+                break;
+            case "riego":
+                sensorAgua.setRiego(true);
+                logger.info("Riego necesario en el sensor Nº: " + sensorAgua.getId());
+                simularRiego(sensorAgua);
+                break;
         }
     }
 
-    public void mandarAvisoCalidad() {
-        List<SensorAgua> sensores = sensorAguaRepository.findAll();
-        for (SensorAgua sensorAgua : sensores) {
-            if (sensorAgua.estaEncendido()) {
-                logger.info(simularCalidad() +" detectada en el sensor Nº: " + sensorAgua.getId());
-                sensorAguaRepository.save(sensorAgua); // Guarda los cambios
-            } else {
-                logger.warning("El sensor Nº: " + sensorAgua.getId() + " está apagado, no se puede obtener valores");
-            }
-        }
-    }
-
-    //estos dos metodo realmente deberian estar en el servicio de agua
+    //estos dos metodo realmente deberian estar en el servicio de agua pero los simulamos para que sea mas facil
     public void simularReparacion(SensorAgua sensorAgua) {
             logger.info("Reparando fuga en el sensor Nº: " + sensorAgua.getId());
-            sensorAgua.noTieneFuga();
+            sensorAgua.setDetectarFuga(false);
             sensorAguaRepository.save(sensorAgua);
     }
 
@@ -51,5 +75,11 @@ public class SensorAguaService {
         //metodo para randomizar el tipo de calidad del agua
         Calidad calidad = Calidad.values()[(int) (Math.random() * Calidad.values().length)];
         return "Calidad del agua: " + calidad;
+    }
+
+    public void simularRiego(SensorAgua sensorAgua) {
+        logger.info("Regando la zona...");
+        sensorAgua.setRiego(false);
+        sensorAguaRepository.save(sensorAgua);
     }
 }

@@ -1,6 +1,5 @@
     package com.example.sensorAgua;
     import com.example.gestor.Estado;
-    import com.example.gestor.Reloj;
     import com.example.gestor.Sensor;
     import jakarta.persistence.Column;
     import jakarta.persistence.Entity;
@@ -8,31 +7,28 @@
     @Entity
     public class SensorAgua extends Sensor {
 
-        @Column(name = "detectarFuga")
+        @Column(name = "fuga")
         protected boolean detectarFuga;
 
-        @Column(name = "calidad")
+        @Column
         protected Calidad calidad;
 
-        public SensorAgua(Estado estado, String tipo , Calidad calidad, boolean detectarFuga) {
+        @Column
+        protected boolean riego;
+
+        public SensorAgua(Estado estado, String tipo , Calidad calidad, boolean detectarFuga, boolean riego) {
             super(estado, tipo);
             this.detectarFuga = detectarFuga;
             this.calidad = calidad;
+            this.riego = riego;
         }
 
         public SensorAgua() {
             super();
         }
+
         public String getTipo() {
             return "agua";
-        }
-
-        public void fuga() {
-            this.detectarFuga = true;
-        }
-
-        public boolean noTieneFuga() {
-            return detectarFuga = false;
         }
 
         public boolean isDetectarFuga() {
@@ -45,6 +41,14 @@
 
         public Calidad getCalidad() {
             return calidad;
+        }
+
+        public boolean isRiego() {
+            return riego;
+        }
+
+        public void setRiego(boolean riego) {
+            this.riego = riego;
         }
 
         public void setCalidad(Calidad calidad) {
