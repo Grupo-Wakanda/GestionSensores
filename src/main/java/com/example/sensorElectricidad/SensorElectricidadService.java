@@ -21,15 +21,29 @@ public class SensorElectricidadService {
 
     public void perdidas() {
         List<SensorElectricidad> sensorElectricidad = sensorElectricidadRepository.findAll();
+
+        if (sensorElectricidad.isEmpty()) {
+        logger.warning("No hay sensores de electricidad");
+            return;
+        }
+
         for (SensorElectricidad sensor : sensorElectricidad) {
-            if (sensor.estaEncendido()) {
+            try {
+                if (!sensor.estaEncendido()) {
+                    logger.warning("El sensor con ID: " +  (sensorElectricidad != null ? sensor.getId(): "desconocido") +
+                            "Esta apagado o no es valido" );
+                    continue;
+                }
+
                 long perdidas = simularPerdidas();
                 sensor.setPerdidas(perdidas);
                 logger.info("Perdidas detectadas con una estimacion de: " + sensor.getPerdidas()
                         +"Kw/h"+ " en el sensor Nº: " + sensor.getId());
                 sensorElectricidadRepository.save(sensor); //esto guarda las perdidas, se debe recuperar en el repositorio de Electricidad para el SmartGrid
-            } else {
-                logger.warning("El sensor Nº: " + sensor.getId() + " esta apagado");
+
+            }catch (Exception e){
+                logger.severe("Error al obtener los datos del sensor con ID: "
+                        + (sensorElectricidad != null ? sensor.getId(): "desconocido") + " " + e.getMessage());
             }
         }
     }
@@ -37,7 +51,6 @@ public class SensorElectricidadService {
     public long simularPerdidas(){
       return (long) (Math.random()*1000);
     }
-    //el valor tiene que ser leido en sus repositorios para que puedan utilizarlo
 
     public void avisoElectricidad(SensorElectricidad sensorElectricidad) {
         randomizacionEventos.manejarCiclo("luz",sensorElectricidad.getReloj(), this::perdidas);

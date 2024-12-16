@@ -15,14 +15,31 @@ public class SensorTraficoService {
 
     public void avisarExceso() {
         List<SensorTrafico> sensorTrafico = SensorTraficoRepository.findAll();
+
+        if (sensorTrafico.isEmpty()){
+            logger.warning("No hay sensores de trafico...");
+            return;
+        }
+
         for (SensorTrafico sensor : sensorTrafico) {
-            if (sensor.estaEncendido()) {
-                logger.info("Hay conglomeracion de trafico en el sensor "+ sensor.getId());
+            try {
+                if (!sensor.estaEncendido()) {
+                    logger.warning("El sensor con ID: " + (sensorTrafico != null ? sensor.getId() : "desconocido") +
+                            "Esta apagado o no es valido");
+                    continue;
+                }
+
+                logger.info("Hay conglomeracion de trafico en el sensor " + sensor.getId());
                 SensorTraficoRepository.save(sensor);
                 simularTrafico(sensor);
-            } else {
-                logger.warning("El sensor Nº: " + sensor.getId() + " esta apagado");
+
             }
+
+            catch (Exception e){
+                logger.severe("Error al obtener los datos del sensor con ID: "
+                        + (sensorTrafico != null ? sensor.getId(): "desconocido") + " " + e.getMessage());
+            }
+
         }
     }
 

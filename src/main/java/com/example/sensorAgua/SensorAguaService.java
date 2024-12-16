@@ -17,7 +17,7 @@ public class SensorAguaService {
     @Autowired
     private SensorAguaRepository sensorAguaRepository;
 
-    public void mandarAviso(String tipoAviso) {
+public void mandarAviso(String tipoAviso) {
         List<SensorAgua> sensorAgua = sensorAguaRepository.findAll(); //se obtienen los sensores
 
         if (sensorAgua.isEmpty()){
